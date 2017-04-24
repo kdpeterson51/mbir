@@ -1,4 +1,4 @@
-## Kyle D. Peterson
+
 ![Image](https://strength.sports.uiowa.edu/sites/strength.sports.uiowa.edu/files/styles/medium/public/people/photos/PETERSON_KYLE.jpg?itok=UZ-rafSh)
 
 This is my first [paper](http://www.tandfonline.com/doi/pdf/10.1080/02640414.2016.1266378?).
