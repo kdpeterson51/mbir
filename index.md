@@ -3,7 +3,7 @@
 
 ### About
 
-Kyle Peterson is the Sports Performance Analyst for Olympic Sports for the University of Iowa. He obtained a B.S. and M.S. in Exercise and Sport Science from University of Wisconsin-La Crosse and is currently in pursuiance of a M.S. in Health Informatics at the University of Iowa.
+Kyle Peterson is the Sports Performance Analyst for Olympic Sports for the University of Iowa. He obtained a B.S. and M.S. in Exercise and Sport Science from University of Wisconsin-La Crosse and is currently in pursuing a M.S. in Health Informatics at the University of Iowa.
 
 ### Research Interests
 * Athlete Monitoring
