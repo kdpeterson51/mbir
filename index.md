@@ -14,4 +14,4 @@ Kyle Peterson is the Sports Performance Analyst for Olympic Sports for the Unive
 ### Submitted & Working Papers
 **Peterson KD**, Quiggle GT. [Tensiomyographical Responses to Accelerometer Loads in Female Collegiate Basketball Players](http://www.tandfonline.com/doi/pdf/10.1080/02640414.2016.1266378?). _Journal of Sports Sciences_. Accepted Nov 26, 2016.
 
-Instanteous Practice Scheduling with Integer Programming. _In Progress_.
+Instantaneous Practice Scheduling with Integer Programming. _In Progress_.
