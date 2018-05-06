@@ -15,5 +15,16 @@ install.packages("mbir")
 ```
 This package depends on the packages `graphics`, `stats`, and `utils`, which are imported upon installation.
 
+# A guided walk through `mbir`
+Below is an example of how a user would perform a *t*-test with the classic Sleep data set.
+```
+data('sleep')
+mbir::smd_test(sleep$extra[sleep$group==1],sleep$extra[sleep$group==2],paired = F)
+```
+Below is an example of how a user would perform a correlation with the classic mtcars data set.
+```
+data('mtcars')
+mbir::corr_test(mtcars$mpg,mtcars$qsec)
+```
 # Feedback
 Feedback from users is welcome, and would be sincerely appreciated, to help improve functionality of `mbir` where warranted. Please reach out to petersonkdon@gmail.com for support, reporting issues, or contributions. Thank you very much.
