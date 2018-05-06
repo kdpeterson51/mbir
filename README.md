@@ -15,16 +15,19 @@ install.packages("mbir")
 ```
 This package depends on the packages `graphics`, `stats`, and `utils`, which are imported upon installation.
 
-# A guided walk through `mbir`
+# A brief walk through `mbir`
 Below is an example of how a user would perform a *t*-test with the classic Sleep data set.
 ```
 data('sleep')
 mbir::smd_test(sleep$extra[sleep$group==1],sleep$extra[sleep$group==2],paired = F)
 ```
-Below is an example of how a user would perform a correlation with the classic mtcars data set.
+By default, `smd_test` function tested for normality and homogeneity prior to performing the respectgive *t*-test. The output first states the results of the preliminary assumption tests, followed by the *t*-test parameters, which are then used to calculate the appropriate effect size estimate (in this case Cohen's *d*). Lastly, `smd_test` prints the magnitude-based inference about the effect size estimate by providing the partitioned probabilities and associated qualitative label. 
+
+Below is an example of how a user would perform a correlation with the classic mtcars data set, which provide the same theme as `smd_test` output.
 ```
 data('mtcars')
 mbir::corr_test(mtcars$mpg,mtcars$qsec)
 ```
+
 # Feedback
 Feedback from users is welcome, and would be sincerely appreciated, to help improve functionality of `mbir` where warranted. Please reach out to petersonkdon@gmail.com for support, reporting issues, or contributions. Thank you very much.
