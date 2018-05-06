@@ -13,3 +13,5 @@ Assuming users have R downloaded and installed, `mbir` can be installed right fr
 ```
 install.packages("mbir")
 ```
+This package depends on the packages `graphics`, `stats`, and `utils`.
+
