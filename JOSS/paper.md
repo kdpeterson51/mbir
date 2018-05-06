@@ -1,5 +1,8 @@
 ---
 title: 'mbir: Magnitude-Based Inferences'
+tags:
+  - R
+  - statistics
 authors:
 - affiliation: 1
   name: Kyle D Peterson
