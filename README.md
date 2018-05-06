@@ -13,7 +13,7 @@ Assuming users have R downloaded and installed, `mbir` can be installed right fr
 ```
 install.packages("mbir")
 ```
-This package depends on the packages `graphics`, `stats`, and `utils`, which are imported automatically upon installation.
+This package depends on the packages `graphics`, `stats`, and `utils`, which are imported upon installation.
 
 # Feedback
 Feedback from users is welcome, and would be sincerely appreciated, to help improve functionality of `mbir` where warranted. Please reach out to petersonkdon@gmail.com for support, reporting issues, or contributions. Thank you very much.
