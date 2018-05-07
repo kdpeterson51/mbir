@@ -23,7 +23,7 @@ mbir::smd_test(sleep$extra[sleep$group==1],sleep$extra[sleep$group==2],paired = 
 ```
 By default, `smd_test` function tested for normality and homogeneity prior to performing the respectgive *t*-test. The output first states the results of the preliminary assumption tests, followed by the *t*-test parameters, which are then used to calculate the appropriate effect size estimate (in this case Cohen's *d*). Lastly, `smd_test` prints the magnitude-based inference about the effect size estimate by providing the partitioned probabilities and associated qualitative label. 
 
-Below is an example of how a user would perform a correlation with the classic mtcars data set, which provide the same theme as `smd_test` output.
+Below is an example of how a user would perform a correlation with the classic mtcars data set, which provide the same theme as above.
 ```
 data('mtcars')
 mbir::corr_test(mtcars$mpg,mtcars$qsec)
