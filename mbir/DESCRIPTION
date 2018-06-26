@@ -9,7 +9,12 @@ Authors@R: c(person("Kyle", "Peterson",
              person("Aaron", "Caldwell", role = "aut"))
 Maintainer: Kyle Peterson <petersonkdon@gmail.com>
 Description: Allows practitioners and researchers a wholesale approach for deriving magnitude-based inferences from raw data. A major goal of 'mbir' is to programmatically detect appropriate statistical tests to run in lieu of relying on practitioners to determine correct stepwise procedures independently.
-Imports: graphics, stats, utils
+Imports: 
+  graphics, 
+  stats, 
+  utils, 
+  jmvcore (>= 0.8),
+  R6
 URL: http://mbir-project.us/
 License: GPL-2
 Copyright: Segments of the package are based upon Will G. Hopkins' work. See vignette and COPYRIGHT file for details.

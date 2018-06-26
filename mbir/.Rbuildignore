@@ -1,3 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.httr-oauth$
+
+^jamovi$
+^temp$
+^build/R$
+^build/js$
+^.*\.jmo$

@@ -16,7 +16,9 @@ test_that("inference are identical using corr_test and corr", {
 
   #Check if p-values are equal
   expect_identical(eq1_test$inference, eq1_corr$inference)
-
+  expect_identical(eq2_test$mbiPositive, eq2_smd$mbiPositive)
+  expect_identical(eq2_test$mbiTrivial, eq2_smd$mbiTrivial)
+  expect_identical(eq2_test$mbiNegative, eq2_smd$mbiNegative)
 
 
 })
@@ -25,15 +27,17 @@ test_that("inference are identical using smd_test and smd", {
   eq2_test <- smd_test(x=databugs$LDLF, y=databugs$LDHF, paired=TRUE,
                         auto=FALSE,
                         plot= FALSE)
-  
+
   eq2_smd <- smd(df = eq2_test$df,  es = eq2_test$d.stat,
                  p=eq2_test$p.value)
-  
-  
-  
+
+
+
   #Check if p-values are equal
   expect_identical(eq2_test$inference, eq2_smd$Inference)
-  
-  
-  
+  expect_identical(eq2_test$mbiPositive, eq2_smd$mbiPositive)
+  expect_identical(eq2_test$mbiTrivial, eq2_smd$mbiTrivial)
+  expect_identical(eq2_test$mbiNegative, eq2_smd$mbiNegative)
+
+
 })
