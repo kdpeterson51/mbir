@@ -1,4 +1,4 @@
-context("Do corr and corr_test functions give identical results")
+context("Do corr and corr_test or smd and smd_test functions give identical results")
 library("mbir")
 
 data <- read.csv("https://raw.githubusercontent.com/jasp-stats/jasp-desktop/development/Resources/Data%20Sets/Big%205%20(Dolan%2C%20Oort%2C%20Stoel%20%26%20Wicherts%2C%202009).csv", sep="")
