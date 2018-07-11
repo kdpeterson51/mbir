@@ -60,14 +60,14 @@ corr_test <- function(x, y, conf.int=0.9, auto=TRUE, method="pearson", swc=0.1, 
   #Pearson
   if (method == "pearson") {
     cor <- stats::cor.test(x, y, method = method, exact = F,
-                           na.action = na.omit, conf.level = conf.int)
+                           na.action = stats::na.omit, conf.level = conf.int)
     corZ <- (0.5*log((1+cor$estimate)/(1-cor$estimate)))
   }
 
 
   if (method == "spearman") {
     cor <- stats::cor.test(x, y, method = method, exact = F,
-                           na.action = na.omit, conf.level = conf.int)
+                           na.action = stats::na.omit, conf.level = conf.int)
     corZ <- (0.5*log((1+cor$estimate)/(1-cor$estimate)))
 
     LL <- (exp(2 * ((0.5 * log((1 + cor$estimate)/(1 - cor$estimate))) +
@@ -84,7 +84,7 @@ corr_test <- function(x, y, conf.int=0.9, auto=TRUE, method="pearson", swc=0.1, 
 
   if (method == "kendall") {
     cor <- stats::cor.test(x, y, method = method, exact = F,
-                           na.action = na.omit, conf.level = conf.int)
+                           na.action = stats::na.omit, conf.level = conf.int)
     corZ <- (0.5*log((1+cor$estimate)/(1-cor$estimate)))
 
     LL <- (exp(2 * ((0.5 * log((1 + cor$estimate)/(1 - cor$estimate))) +
