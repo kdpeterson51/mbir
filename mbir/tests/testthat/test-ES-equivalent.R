@@ -1,6 +1,6 @@
 context("Do the corr_test and smd_test function calculate proper effect sizes")
 library("mbir")
-library("effsize")
+
 
 data <- read.csv("https://raw.githubusercontent.com/jasp-stats/jasp-desktop/development/Resources/Data%20Sets/Big%205%20(Dolan%2C%20Oort%2C%20Stoel%20%26%20Wicherts%2C%202009).csv", sep="")
 #data <- read.csv("C:/Users/Daniel/Downloads/Big 5 (Dolan, Oort, Stoel & Wicherts, 2009).csv", sep="")
@@ -13,7 +13,7 @@ test_that("correlation coefficient is correct from corr_test", {
   eq1_test <- corr_test(x=data$Extraversion, y=data$Agreeableness,
                         auto=FALSE, plot= FALSE)
 
-  eq1_corr <- cor.test(data$Extraversion, data$Agreeableness)
+  eq1_corr <- effsize::cor.test(data$Extraversion, data$Agreeableness)
 
 
 
@@ -30,7 +30,7 @@ test_that("effect size is correct from smd_test", {
                                      auto=FALSE,
                                      plot= FALSE)
 
-  eq2_ES <- cohen.d(databugs$LDLF, databugs$LDHF)
+  eq2_ES <- effsize::cohen.d(databugs$LDLF, databugs$LDHF)
 
 
 
