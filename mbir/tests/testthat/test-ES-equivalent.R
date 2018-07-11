@@ -19,7 +19,7 @@ test_that("correlation coefficient is correct from corr_test", {
   effsizeR <- unname(eq1_corr$estimate)
 
   #Check if p-values are equal
-  expect_identical(eq1_test$corr.stat, eq1_corr$estimate)
+  expect_identical(mbirR, effsizeR)
 
 
 
