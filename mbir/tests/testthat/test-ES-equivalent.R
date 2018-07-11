@@ -1,5 +1,5 @@
 context("Do the corr_test and smd_test function calculate proper effect sizes")
-library("mbir")
+library(mbir)
 
 
 data <- read.csv("https://raw.githubusercontent.com/jasp-stats/jasp-desktop/development/Resources/Data%20Sets/Big%205%20(Dolan%2C%20Oort%2C%20Stoel%20%26%20Wicherts%2C%202009).csv", sep="")
@@ -32,10 +32,11 @@ test_that("effect size is correct from smd_test", {
 
   eq2_ES <- effsize::cohen.d(databugs$LDLF, databugs$LDHF)
 
-
+  mbirD <- eq2_test$d.stat
+  effsizeD <- unname(eq2_ES$estimate)
 
   #Check if p-values are equal
-  expect_identical(eq2_test$d.stat, eq2_ES$estimate)
+  expect_identical(mbirD, effsizeD)
 
 
 
