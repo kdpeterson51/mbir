@@ -16,9 +16,9 @@ test_that("inference are identical using corr_test and corr", {
 
   #Check if p-values are equal
   expect_identical(eq1_test$inference, eq1_corr$inference)
-  expect_identical(eq2_test$mbiPositive, eq2_corr$mbiPositive)
-  expect_identical(eq2_test$mbiTrivial, eq2_corr$mbiTrivial)
-  expect_identical(eq2_test$mbiNegative, eq2_corr$mbiNegative)
+  expect_identical(eq1_test$mbiPositive, eq1_corr$mbiPositive)
+  expect_identical(eq1_test$mbiTrivial, eq1_corr$mbiTrivial)
+  expect_identical(eq1_test$mbiNegative, eq1_corr$mbiNegative)
 
 
 })
