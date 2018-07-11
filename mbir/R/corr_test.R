@@ -190,8 +190,8 @@ corr_test <- function(x, y, conf.int=0.9, auto=TRUE, method="pearson", swc=0.1, 
   }
 
   #Save List of values
-  rval <- list(mean1 = round(mean(x, na.rm = T), digits = 3), sd1 = round(sd(x, na.rm = T), digits = 3),
-               mean2 = round(mean(y, na.rm = T), digits = 3), sd2 = round(sd(y, na.rm = T), digits = 3),
+  rval <- list(mean1 = round(mean(x, na.rm = T), digits = 3), sd1 = round(stats::sd(x, na.rm = T), digits = 3),
+               mean2 = round(mean(y, na.rm = T), digits = 3), sd2 = round(stats::sd(y, na.rm = T), digits = 3),
                N = length(full), swc = swc,
                corr.stat = r.stat[[1]], z=corZ[[1]], z.LL = r.LL, z.UL = r.UL,
                norm=norm, type=type, inference=inference,
