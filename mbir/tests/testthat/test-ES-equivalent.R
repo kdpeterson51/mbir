@@ -13,9 +13,10 @@ test_that("correlation coefficient is correct from corr_test", {
   eq1_test <- corr_test(x=data$Extraversion, y=data$Agreeableness,
                         auto=FALSE, plot= FALSE)
 
-  eq1_corr <- effsize::cor.test(data$Extraversion, data$Agreeableness)
+  eq1_corr <- stats::cor.test(data$Extraversion, data$Agreeableness)
 
-
+  mbirR <- eq1_test$corr.stat
+  effsizeR <- unname(eq1_corr$estimate)
 
   #Check if p-values are equal
   expect_identical(eq1_test$corr.stat, eq1_corr$estimate)
