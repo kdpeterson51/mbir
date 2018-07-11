@@ -85,7 +85,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
         var.equal = variance,
         paired = paired,
         conf.level = conf.int,
-        na.action = na.omit,
+        na.action = stats::na.omit,
         mu = mu
       )
     }
@@ -97,7 +97,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
           var.equal = variance,
           paired = paired,
           conf.level = conf.int,
-          na.action = na.omit,
+          na.action = stats::na.omit,
           mu = mu
         )
     }
@@ -120,7 +120,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
       paired = paired,
       conf.int = T,
       conf.level = 0.9,
-      na.action = na.omit,
+      na.action = stats::na.omit,
       correct = F,
       exact = F
     )
@@ -493,7 +493,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
   }
   else {
     test <- stats::t.test(x,y, var.equal = variance, paired = paired, conf.level = conf.int,
-                          na.action = na.omit, mu = mu)
+                          na.action = stats::na.omit, mu = mu)
     d <- ifelse(paired == T, ((mean(x, na.rm = T) - mean(y,
                                                          na.rm = T)) / pair.stdr), test$statistic * ind.stdr)
     LL <- d - (stats::qt(((
