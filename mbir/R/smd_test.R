@@ -74,7 +74,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
   n2 <- length.x + length.y
   n <- length.x
   ind.stdr <- sqrt(1 / length.x + 1 / length.y)
-  pair.stdr <- sqrt((sd(x, na.rm = T) ^ 2 + sd(y, na.rm = T) ^ 2) / 2)
+  pair.stdr <- sqrt((stats::sd(x, na.rm = T) ^ 2 + stats::sd(y, na.rm = T) ^ 2) / 2)
 
   if (Normal == FALSE) {
     if (0 %in% x || 0 %in% y) {
@@ -485,8 +485,8 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
 
     invisible(list(or.stat = OR, or.LL = LL, or.UL = UL, r.stat = r, r.LL = r.LL, r.UL = r.UL,
                    t.value = test$statistic[[1]], df = test$parameter[[1]], p.value = test$p.value,
-                   mean1 = round(mean(x, na.rm = T), digits = 3), sd1 = round(sd(x, na.rm = T), digits = 3),
-                   mean2 = round(mean(y, na.rm = T), digits = 3), sd2 = round(sd(y, na.rm = T), digits = 3),
+                   mean1 = round(mean(x, na.rm = T), digits = 3), sd1 = round(stats::sd(x, na.rm = T), digits = 3),
+                   mean2 = round(mean(y, na.rm = T), digits = 3), sd2 = round(stats::sd(y, na.rm = T), digits = 3),
                    LogmbiNegative = negative, LogmbiTrivial = trivial, LogmbiPositive = positive,
                    mbiNegative.r = negative.r, mbiTrivial.r = trivial.r, mbiPositive.r = positive.r,
                    LogInference=LogInference, NonParametricInference=NonParametricInference))
@@ -715,9 +715,9 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
       p.value = test$p.value,
       conf.int=conf.int,
       mean1 = round(mean(x, na.rm = T), digits = 3),
-      sd1 = round(sd(x, na.rm = T), digits = 3),
+      sd1 = round(stats::sd(x, na.rm = T), digits = 3),
       mean2 = round(mean(y, na.rm = T), digits = 3),
-      sd2 = round(sd(y, na.rm = T), digits = 3),
+      sd2 = round(stats::sd(y, na.rm = T), digits = 3),
       mbiNegative = negative,
       mbiTrivial = trivial,
       mbiPositive = positive,
