@@ -10,7 +10,7 @@ test_that("aipe_smd accurately estimates sufficient sample size for smd_test", {
   
   set.seed(0)
   
-  ss_est <- aipe_smddd(moe = 0.8, paired = FALSE)
+  ss_est <- aipe_smd(moe = 0.8, paired = FALSE)
   
   samp1 <- sample(databugs$LDLF, ss_est$n); samp2 <- sample(databugs$LDHF, ss_est$n)
   
@@ -28,7 +28,7 @@ test_that("ss_smd accurately estimates sufficient sample size for smd_test", {
   
   set.seed(333)
   
-  ss_est <- ss_smddd(exp = 8, con = 8, es = .2)
+  ss_est <- ss_smd(exp = 8, con = 8, es = .2)
   
   samp1 <- sample(databugs$LDLF, 8); samp2 <- sample(databugs$LDHF, 8)
   
@@ -58,7 +58,7 @@ test_that("ss_odds accurately estimates sufficient sample size for smd_test", {
   
   set.seed(333)
   
-  ss_est <- ss_oddsss(exp = 8, con = 8, or = 1.5)
+  ss_est <- ss_odds(exp = 8, con = 8, or = 1.5)
   
   samp1 <- sample(databugs$LDLF, 8); samp2 <- sample(databugs$LDHF, 8)
   
