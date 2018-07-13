@@ -12,7 +12,7 @@ test_that("bootstrap agrees on significance from smd_test", {
   
   eqp_boot <- boot_test(databugs$LDLF, databugs$LDHF)
   
-  mbirp <- ifelse(eq2_test$p.value < 0.05, TRUE, FALSE)
+  mbirp <- ifelse(eqp_test$p.value < 0.05, TRUE, FALSE)
   
   bootp <- ifelse(eqp_boot$b.LL < eqp_boot$med && eqp_boot$b.UL > eqp_boot$med, FALSE, TRUE)
   
