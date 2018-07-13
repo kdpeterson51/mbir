@@ -1,4 +1,4 @@
-#context("Do the estiamtes from sample size functions agree with statistical test funcitons.")
+#context("Do the estiamtes from sample size functions agree with statistical test functions.")
 library(mbir)
 
 databugs <- read.csv("https://raw.githubusercontent.com/jamovi/jamovi/master/examples/Bugs%20(Ryan%2C%20Wilde%20%26%20Crist%2C%202013).csv")
