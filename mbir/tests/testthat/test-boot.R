@@ -8,7 +8,7 @@ databugs <- na.omit(databugs)
 
 test_that("bootstrap agrees on significance from smd_test", {
   
-  eqp_test <- smd_test(x=databugs$LDLF, y=databugs$LDHF, paired=TRUE, auto=FALSE, plot= FALSE,swc=.6)
+  eqp_test <- smd_test(x=databugs$LDLF, y=databugs$LDHF, paired=TRUE, auto=FALSE, plot= FALSE)
   
   eqp_boot <- boot_test(databugs$LDLF, databugs$LDHF)
   
