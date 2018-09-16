@@ -41,3 +41,37 @@ test_that("inference are identical using smd_test and smd", {
 
 
 })
+
+
+test_that("Differences in correlations are correctly calculated", {
+  #Set parameters
+  sample_size = 50
+  corr_1 <- 0.5
+  corr_2 <- 0.55
+  corr_3 <- 0.8
+
+  #Test using mbir functions
+  corr_non_diff <- mbir::corr_diff(r1=corr_1, n1=sample_size, r2=corr_2, n2=sample_size)
+  corr_big_diff <- mbir::corr_diff(r1=corr_1, n1=sample_size, r2=corr_3, n2=sample_size)
+
+
+  #Z-transformation for each correlation
+  corr1.z <- 0.5 * log((1 + corr_1)/(1 - corr_1))
+  corr2.z <- 0.5 * log((1 + corr_2)/(1 - corr_2))
+  corr3.z <- 0.5 * log((1 + corr_3)/(1 - corr_3))
+
+  #Standard error
+  se.diff.r <- sqrt(1/(sample_size - 3) + 1/(sample_size - 3))
+
+  #z-test (Steiger Test) for both correlations
+  diff_z_non <- corr1.z - corr2.z
+  diff_z_big <- corr1.z - corr3.z
+  z_non <- abs(diff_z_non /se.diff.r)
+  p_non <- (2*(1 - pnorm(z_non)))
+  z_big <- abs(diff_z_big /se.diff.r)
+  p_big <- (2*(1 - pnorm(z_big)))
+
+  #Check that p-values are equivalent
+  expect_equal(p_non, corr_non_diff$p.value)
+  expect_equal(p_big, corr_big_diff$p.value)
+})
