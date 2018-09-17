@@ -42,6 +42,25 @@ test_that("inference are identical using smd_test and smd", {
 
 })
 
+test_that("inference are identical using smd_test and odds", {
+  
+  test_that("inference are identical using smd_test and smd", {
+    eq2_test <- smd_test(x=databugs$HDHF, y=databugs$HDLF, paired=TRUE,
+                         auto=T,
+                         plot= FALSE)
+    
+    eq2_odds <- odds(or = eq2_test$or.stat,  p = eq2_test$p.value)
+    
+    
+    
+    #Check if inferences are equal
+    expect_identical(eq2_test$LogmbiPositive, eq2_odds$mbiPositive)
+    expect_identical(eq2_test$LogmbiTrivial, eq2_odds$mbiTrivial)
+    expect_identical(eq2_test$LogmbiNegative, eq2_odds$mbiNegative)
+    
+    
+  })
+})
 
 test_that("Differences in correlations are correctly calculated in corr_diff", {
   #Set parameters
