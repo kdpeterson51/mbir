@@ -43,7 +43,7 @@ test_that("inference are identical using smd_test and smd", {
 })
 
 
-test_that("Differences in correlations are correctly calculated", {
+test_that("Differences in correlations are correctly calculated in corr_diff", {
   #Set parameters
   sample_size = 50
   corr_1 <- 0.5
@@ -74,4 +74,58 @@ test_that("Differences in correlations are correctly calculated", {
   #Check that p-values are equivalent
   expect_equal(p_non, corr_non_diff$p.value)
   expect_equal(p_big, corr_big_diff$p.value)
+})
+
+
+test_that("ensuring effect size from prop function matches external reference", {
+  
+  p1<-0.7
+  n1<-25
+  p2<-0.5
+  n2<-20
+  
+  ex_ref <- psych::phi(as.table(rbind(c(p1*n1,p2*n2),c((1-p1)*n1,(1-p2)*n2))),3)
+  
+  prop_samp <- mbir::prop(p1,n1,p2,n2)
+  
+  # Check if phi coefficients are equal
+  expect_identical(ex_ref, unname(round(prop_samp$phi,3)))
+})
+
+
+test_that("ensuring es_convert properly from external reference", {
+  
+  test_d_or <- function(x) {
+      return(exp(x*pi/sqrt(3)))}
+    
+  test_d_r <- function(x) {
+      return(sign(x)*sqrt((x^2)/((x^2)+4)))}   
+    
+  test_or_d <- function(x) {
+    return(log(x)*(sqrt(3)/pi))}
+    
+  test_or_r <- function(x) {
+    d<-test_or_d(x)
+    return(sign(x)*sqrt((d^2)/((d^2)+4)))}
+    
+  test_r_d <- function(x) {
+    return((2*x)/sqrt(1-(x^2)))}
+    
+  test_r_or <- function(x) {
+    d<-test_r_d(x)
+    return(exp((d*pi)/sqrt(3)))}
+  
+  d_or<-mbir::es_convert(0.8,from = "d",to="or")
+  d_r<-mbir::es_convert(1.2,from = "d",to="r")
+  or_d<-mbir::es_convert(3,from = "or",to="d")
+  or_r<-mbir::es_convert(2,from = "or",to="r")
+  r_d<-mbir::es_convert(0.6,from = "r",to="d")
+  r_or<-mbir::es_convert(0.3,from = "r",to="or")
+  
+  expect_identical(round(test_d_or(0.8),2), d_or$convert)
+  expect_identical(round(test_d_r(1.2),2), d_r$convert)
+  expect_identical(round(test_or_d(3),2), or_d$convert)
+  expect_identical(round(test_or_r(2),2), or_r$convert)
+  expect_identical(round(test_r_d(0.6),2), r_d$convert)
+  expect_identical(round(test_r_or(0.3),2), r_or$convert)
 })
