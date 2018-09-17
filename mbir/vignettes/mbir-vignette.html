@@ -12,7 +12,7 @@
 
 <meta name="author" content="Kyle D. Peterson, Aaron Caldwell" />
 
-<meta name="date" content="2018-07-06" />
+<meta name="date" content="2018-09-16" />
 
 <title>Introduction to mbir</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction to <code>mbir</code></h1>
 <h4 class="author"><em>Kyle D. Peterson, Aaron Caldwell</em></h4>
-<h4 class="date"><em>2018-07-06</em></h4>
+<h4 class="date"><em>2018-09-16</em></h4>
 
 
 
@@ -277,7 +277,7 @@ mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre
 ##         &quot;Negative&quot;    &quot;Trivial&quot; &quot;Positive&quot;
 ## MBI (%) &quot;0&quot;           &quot;24.2&quot;    &quot;75.8&quot;    
 ## 
-## Inference: Likely Moderate Increase.</code></pre>
+## Inference: Likely Small Increase.</code></pre>
 </div>
 <div id="corr" class="section level3">
 <h3>2.2. <code>corr()</code></h3>
@@ -333,7 +333,7 @@ mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre
 ##    diff = -0.15
 ##    chi-sq = 1
 ##    90% CI [-0.37, 0.09]
-##    p value = 0.36
+##    p value = 0.37
 ## 
 ##    phi = 0.15
 ## 
@@ -522,10 +522,10 @@ mbir<span class="op">::</span><span class="kw">es_convert</span>(<span class="kw
 ## 10,000 Resamples
 ## 
 ##  5% 95% 
-##  60 224 
+##  69 226 
 ## 
 ## Difference in Medians: Lacking Evidence (CI contains 100).</code></pre>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 <p>The histogram illustrates the bootstrapped distribution of the resampled difference in medians. If the dashed line (<code>med</code>) is within the solid lines (confidence intervals), evidence of effect is absent. Conversely, if <code>med</code> is outside the confidence intervals, evidence of effect is present.</p>
 <p>Regarding the sRPE data set, surely an effect is present, but unfortunately the user can not definitively say there is a difference of 100 after resampling, as the 90% confidence interval contains 100 (dashed line between solid lines).</p>
 </div>

@@ -137,7 +137,7 @@ swc_ind<-function(x, swc, type=c("previous","trend"), ts, te, main, xlab, ylab){
 
   if(type == "trend"){
 
-  pred.err<-sqrt(te^2+pred$residual.scale^2*((1/length(times)+1/(length(times)-1))*(times-mean(times))^2/stats::sd(times)^2))
+  pred.err<-sqrt(te^2+pred$residual.scale^2*((1/length(times)+1/(length(times)-1))*(times-mean(times))^2/sd(times)^2))
 
   degfree<-(pred$residual.scale^2*(((1/length(times)+1/(length(times)-1))*(times-mean(times))^2/stats::sd(times)^2)+(te*mod$fitted.values/100)^2)^2)/((pred$residual.scale^2*((1/length(times)+1/(length(times)-1))*(times-mean(times))^2/stats::sd(times)^2))^2/(mean(times)-2)+(te*mod$fitted.values/100)^4/(mod$df.residual-1))
   diff<-(x-mod$fitted.values)
@@ -227,6 +227,7 @@ swc_ind<-function(x, swc, type=c("previous","trend"), ts, te, main, xlab, ylab){
   names(noway)<-c("Point"," ","Diff"," ","N","T","P"," ","MBI")
   cat("\n   MBI From Trend Line:\n\n")
   print(noway,row.names=F)
+  rval <- list(slope=table1[1], rsq=table1[2],fstat=table1[3],p.value=table1[4])
   }
 }
 

@@ -114,3 +114,5 @@ smd <- function (es, p, df, conf.int=0.9, swc=0.5, plot=FALSE){
                p.value=p, conf.int=conf.int, swc=swc,
                mbiPositive=positive, mbiTrivial=trivial, mbiNegative=negative, inference=inference)
 }
+
+
