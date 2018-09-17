@@ -44,7 +44,7 @@ test_that("inference are identical using smd_test and smd", {
 
 test_that("inference are identical using smd_test and odds", {
   
-  test_that("inference are identical using smd_test and smd", {
+  test_that("inference are identical using smd_test and odds", {
     eq2_test <- smd_test(x=databugs$HDHF, y=databugs$HDLF, paired=TRUE,
                          auto=T,
                          plot= FALSE)
