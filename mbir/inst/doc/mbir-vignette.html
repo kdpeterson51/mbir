@@ -10,9 +10,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="Kyle D. Peterson" />
+<meta name="author" content="Kyle D. Peterson, Aaron Caldwell" />
 
-<meta name="date" content="2017-08-12" />
+<meta name="date" content="2019-01-17" />
 
 <title>Introduction to mbir</title>
 
@@ -69,8 +69,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Introduction to <code>mbir</code></h1>
-<h4 class="author"><em>Kyle D. Peterson</em></h4>
-<h4 class="date"><em>2017-08-12</em></h4>
+<h4 class="author"><em>Kyle D. Peterson, Aaron Caldwell</em></h4>
+<h4 class="date"><em>2019-01-17</em></h4>
 
 
 
@@ -150,13 +150,13 @@ Figure 1: decision tree illustration
 <ul>
 <li>Unfortunately, <em>d</em> overestimates size of effects with small sample sizes. Consequently, to reduce bias and avoid overestimating <em>d</em>, an approximate adjustment factor is applied to <em>d</em> when degrees of freedom are below 30.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> Thereafter, <em>d</em><sub>adj</sub> represents the adjusted effect size value.</li>
 </ul>
-<p>Upon log-transformation, exponentiating the confidence intervals of the log-transformed difference consequently bestows a ratio of geometric means.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> Subsequently taking the difference between these two values captures the point estimate - that is, on the log scale: log(a)-log(b) = log(a/b), which can be interpreted in a similar manner as an odds ratio. On the nonparametric side, dividing the <em>z</em> value by the square root of <em>n</em> stealthily arrives at <em>r</em>.</p>
+<p>Upon log-transformation, exponentiating the confidence intervals of the log-transformed difference consequently bestows a difference in geometric means.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> Subsequently taking the difference between these two values captures the point estimate - that is, on the log scale: log(a)-log(b) = log(a/b), which can be interpreted in a similar manner as an odds ratio. On the nonparametric side, dividing the <em>z</em> value by the square root of <em>n</em> stealthily arrives at <em>r</em>.</p>
 <ul>
 <li>Effect size confidence intervals are provided for each analysis to disclose the precision of observed effect size, or perhaps the maximum likely estimation error.</li>
 </ul>
 <p><strong>4) Magnitude-Based Inferences:</strong></p>
 <p>The final calculations aggregate the aforementioned statistical parameters to ultimately formulate magnitude-based inferences of effects. Calculations were reverse-engineered from Hopkins’s cited spreadsheet<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> and transcribed into the <strong>R</strong> language. Users are welcome to use <code>mbir</code> Input Functions (Section 2) to directly compare their numerical results to the respective spreadsheet and thereby confirm <code>mbir</code> calculations are correct.</p>
-<p>To quickly abbreviate, magnitude-based inferences offer a form of inference in which the parameter is partitioned into three regions corresponding to various qualitative aspects of the parameter (substantially negative, trivial, substantially positive). A probability is assigned to each of these regions, calculated from the assumed distribution of the parameter estimate. To be more transparent, the obtained <em>t</em> statistic is adjusted (updated) by the calculated effect size before justifying the cumulative probability distribution. (This marvelous statistical modulation has therefore been coined “pseudo-Bayesian”). Each <code>mbir</code> function presents the observed magnitude of effect, as well as the precision of estimation. <em>P</em>-values are shown for the sake of formality, but users are encouraged to highlight Hopkins’ content-rich inference: making a qualitative statement with regard to practical significance. The last line of <code>smd_test()</code> output composes the appropriate statement from given parameters, which considers both the level of confidence (<em>possibly</em>, <em>likely</em>, etc), level of magnitude (trivial, small, moderate, etc), as well as the direction (negative, positive) of effect.</p>
+<p>To quickly abbreviate, magnitude-based inferences offer a form of inference in which the parameter is partitioned into three regions corresponding to various qualitative aspects (substantially negative, trivial, substantially positive). A probability is assigned to each of these regions, calculated from the assumed distribution of the parameter estimate. To be more transparent, the obtained <em>t</em> statistic is adjusted (updated) by the calculated effect size before justifying the cumulative probability distribution. (This marvelous statistical modulation has therefore been coined “pseudo-Bayesian”). Each <code>mbir</code> function presents the observed magnitude of effect, as well as the precision of estimation. <em>P</em>-values are shown for the sake of formality, but users are encouraged to highlight Hopkins’ content-rich inference: making a qualitative statement with regard to practical significance. The last line of <code>smd_test()</code> output composes the appropriate statement from given parameters, which considers both the level of confidence (<em>possibly</em>, <em>likely</em>, etc), level of magnitude (trivial, small, moderate, etc), as well as the direction (negative, positive) of effect.</p>
 <p>Unfortunately magnitude-based inferences has been formerly criticized for inflated probabilities of effect (lacking conservativeness).<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> <sup>,</sup> <a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a> To counter this notion however, if an intervention is able to reproduce a <em>possibly small</em> improvement in elite performance, it is therefore an arguably worthwhile and meaningful intervention (that may have passed under the statistical radar of more conservative approaches).</p>
 <p><strong>Example 1 </strong><br />
 Consider the following data set, which sampled twenty wide receiver 40-yard dash times from both 2007 and 2017 NFL combine.<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a></p>
@@ -167,7 +167,7 @@ Consider the following data set, which sampled twenty wide receiver 40-yard dash
 <li><code>y</code> as the null group to test against (2007).</li>
 <li><code>paired = FALSE</code> due to the independent study design.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mbir<span class="op">::</span><span class="kw">smd_test</span>(<span class="dt">x =</span> now, <span class="dt">y =</span> then, <span class="dt">paired =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mbir<span class="op">::</span><span class="kw">smd_test</span>(<span class="dt">x =</span> now, <span class="dt">y =</span> then, <span class="dt">paired =</span> <span class="ot">FALSE</span>, <span class="dt">auto =</span> T)</code></pre></div>
 <pre><code>##    Mean of now = 4.53; Mean of then = 4.47
 ##    Normality Observed, Equal Variance
 ##    Method:  Two Sample t-test
@@ -190,7 +190,7 @@ Consider the following data set, which sampled twenty wide receiver 40-yard dash
 ## 
 ## Inference: Possibly Moderate Increase.</code></pre>
 <p><code>smd_test()</code> output first provides the mean for the respective groups, followed by the detected assumptions and statistical test performed. Since normality and homoscedasticity were observed, the Student’s <em>t</em>-test was executed upon the raw data (which can be confirmed by following the decision tree path in Figure 1). After displaying the <em>t</em>-test parameters, we see Cohen’s <em>d</em> of 0.66 (± 0.54) attributes to a <em>moderate</em> effect size magnitude (according to Hopkins’ thresholds). However, applying the qualitative language associated with the magnitude-based inferences (last line of <code>smd_test()</code> output), we can add <em>possibly</em> to our conclusion statement.</p>
-<p>Since the effect size unit ended up positive, this inferes that 2017 times were actually slower than 2007 (an increase in time). Therefore, the concluding statement to the above scenario would be something to the effect of:</p>
+<p>Since the effect size unit ended up positive, this infers that 2017 times were actually slower than 2007 (an increase in time). Therefore, the concluding statement to the above scenario would be something to the effect of:</p>
 <blockquote>
 <p>“Wide receivers from the 2017 NFL combine recorded slower 40-yard dash times than wide receivers from the 2007 NFL combine by a <em>possibly moderate degree</em> (<em>d</em> = 0.66 ± 0.54).”</p>
 </blockquote>
@@ -204,7 +204,7 @@ Consider the following data set, which sampled twenty wide receiver 40-yard dash
 <li><code>paired = TRUE</code></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Named a variable &quot;mag&quot; for later use within vignette</span>
-mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre, <span class="dt">paired =</span> T)</code></pre></div>
+mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre, <span class="dt">paired =</span> T, <span class="dt">auto =</span> T)</code></pre></div>
 <pre><code>##    Mean of post = 3.08; Mean of pre = 1.96
 ##    Skewness Observed, Equal Variance
 ##    Method: Paired t-test
@@ -222,7 +222,6 @@ mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre
 ##         Most Unlikely Very Unlikely Most Likely
 ##         &quot;Lower&quot;       &quot;Trivial&quot;     &quot;Higher&quot;   
 ## MBI (%) &quot;0.2&quot;         &quot;3.6&quot;         &quot;96.2&quot;     
-## 
 ## Inference: Most Likely Small Increase.
 ## -----------------------------------------------
 ##    Nonparametric Inference
@@ -243,9 +242,9 @@ mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre
 ##         &quot;Negative&quot;    &quot;Trivial&quot; &quot;Positive&quot;
 ## MBI (%) &quot;3.4&quot;         &quot;15.2&quot;    &quot;81.4&quot;    
 ## 
-## Inference: Likely Small Effect Size.</code></pre>
+## Inference: Likely Small Effect Size</code></pre>
 <p>Since the raw data deviated far from a Gaussian distribution, transformations were applied to correct for such violation. Regarding the parametric inference, quite significant NHST parameters are calcualted. However, what is more telling is that post-test values recorded 1.53 (± 0.45) times more pull ups than pre-test, resulting in a <em>most likely small</em> increase. Before moving on though, let’s consider the philosophy behind Frank Wilcoxon’s underutilized, yet elegant, nonparametric methodology - as it may provide better context for answering the present question.</p>
-<p>The Wilcoxon signed-rank test operates in a fairly similar manner as the paired <em>t</em>-test (based on the difference between two conditions). Once these differences between pre-/post-test are calcualted they are numerically ranked with the sign of the difference (positive/negative) assigned to each rank (zeros excluded). In the end, the sum of the positive ranks are tested against the sum of the negative ranks. Thinking back to the pull up scenario, this logic dovetails nicely with the question at hand: how many athletes improved, performed equal, or worse from pre-test to post-test. The nonparametric analysis indeed appreciates that a select few experienced a performance decay (<em>r</em> 90% lower bound: -0.06) while most reaped a positive adaptation (<em>r</em> 90% upper bound: 0.57). Therefore, the present conclusion would take on the following argot:</p>
+<p>The Wilcoxon signed-rank test operates in a fairly similar manner as the paired <em>t</em>-test (based on the difference between two conditions). Once these differences between pre-/post-test are calcualted they are numerically ranked with the sign of the difference (positive/negative) assigned to each rank (zeros excluded). In the end, the sum of the positive ranks are tested against the sum of the negative ranks. Thinking back to the pull up scenario, this logic dovetails nicely with the question at hand: how many athletes improved, performed equal, or worse from pre-test to post-test? The nonparametric analysis indeed appreciates that a select few experienced a performance decay (<em>r</em> 90% lower bound: -0.06) while most reaped a positive adaptation (<em>r</em> 90% upper bound: 0.57). Therefore, the present conclusion would take on the following argot:</p>
 <blockquote>
 <p>“After 4-week training intervention, athletes exhibited a <em>likely small</em> increase in pull up performance (<em>r</em> = 0.28 ± 0.32).”</p>
 </blockquote>
@@ -257,7 +256,7 @@ mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre
 </div>
 <div id="section-2-input-functions" class="section level2">
 <h2>Section 2: Input Functions</h2>
-<p>The next set of functions are intended to emulate the experience of Hopkins’ Microsoft Excel spreadsheet<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a> within the <strong>R</strong> environment. However, if users are not comfortable with performing proper statistical tests and inputing the parameters independently, they are gladly prompted to use <code>mbir</code> Data Functions in Section 1.</p>
+<p>The first three functions are intended to emulate the experience of Hopkins’ Microsoft Excel spreadsheet<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a> within the <strong>R</strong> environment. However, if users are not comfortable with performing proper statistical tests and inputing the parameters independently, they are gladly prompted to use <code>mbir</code> Data Functions in Section 1. The following two functions are supplemental statistical Input Functions.</p>
 <div id="smd" class="section level3">
 <h3>2.1. <code>smd()</code></h3>
 <p>The syntactic structure of <code>smd()</code> requires the following <em>t</em>-test parameters:</p>
@@ -278,7 +277,7 @@ mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre
 ##         &quot;Negative&quot;    &quot;Trivial&quot; &quot;Positive&quot;
 ## MBI (%) &quot;0&quot;           &quot;24.2&quot;    &quot;75.8&quot;    
 ## 
-## Inference: Likely Moderate Increase.</code></pre>
+## Inference: Likely Small Increase.</code></pre>
 </div>
 <div id="corr" class="section level3">
 <h3>2.2. <code>corr()</code></h3>
@@ -297,7 +296,7 @@ mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre
 ## 
 ##         Very Unlikely Unlikely  Possibly  
 ##         &quot;Negative&quot;    &quot;Trivial&quot; &quot;Positive&quot;
-## MBI (%) &quot;4.6&quot;         &quot;21.4&quot;    &quot;74&quot;      
+## MBI (%) &quot;4.6&quot;         &quot;21.5&quot;    &quot;73.9&quot;    
 ## 
 ## Inference: Possibly Small Positive Correlation.</code></pre>
 </div>
@@ -334,7 +333,7 @@ mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre
 ##    diff = -0.15
 ##    chi-sq = 1
 ##    90% CI [-0.37, 0.09]
-##    p value = 0.35
+##    p value = 0.37
 ## 
 ##    phi = 0.15
 ## 
@@ -367,9 +366,7 @@ mbir<span class="op">::</span><span class="kw">corr_diff</span>(<span class="dt"
 <pre><code>##    Test of Two Correlations:
 ##    diff = 0.12
 ##    90% CI [-0.28, 0.57]
-##    p value = 0.55
-## 
-## Inference: Lacking Evidence, r2 = r1, (CI contains 0).</code></pre>
+##    p value = 0.55</code></pre>
 <p>Even though the two correlations display strong evidence towards their associations independently, the practitioner cannot conclude that one of the groups has a stronger relationship compared to the other (i.e. the two positive correlations do not differ). In the end, the conclusion would be there is considerable uncertainty between groups, as the difference in correlations for females and males (<em>r</em><sub><em>2</em></sub> - <em>r</em><sub><em>1</em></sub> = 0.12) could plausibly be as low as -0.28 or as high as 0.57.</p>
 </div>
 </div>
@@ -493,7 +490,7 @@ mbir<span class="op">::</span><span class="kw">corr_diff</span>(<span class="dt"
 ## or = 2.1</code></pre>
 <p>If users wish to include effect size confidence intervals from preceding <code>smd_test()</code> results within one line of code, they may do so as such:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Section 1.1. pre-test post-test 40 yard dash example:</span>
-mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre, <span class="dt">paired =</span> T)</code></pre></div>
+mag&lt;-mbir<span class="op">::</span><span class="kw">smd_test</span>(post, pre, <span class="dt">paired =</span> T, <span class="dt">auto =</span> T)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Wish to convert given Odds Ratio to Cohen's d:</span>
 mbir<span class="op">::</span><span class="kw">es_convert</span>(<span class="kw">c</span>(mag<span class="op">$</span>or.LL, mag<span class="op">$</span>or.stat, mag<span class="op">$</span>or.UL), <span class="dt">from =</span> <span class="st">&quot;or&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;d&quot;</span>)</code></pre></div>
 <pre><code>## Effect Size Conversion
@@ -525,10 +522,10 @@ mbir<span class="op">::</span><span class="kw">es_convert</span>(<span class="kw
 ## 10,000 Resamples
 ## 
 ##  5% 95% 
-##  60 226 
+##  69 224 
 ## 
 ## Difference in Medians: Lacking Evidence (CI contains 100).</code></pre>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 <p>The histogram illustrates the bootstrapped distribution of the resampled difference in medians. If the dashed line (<code>med</code>) is within the solid lines (confidence intervals), evidence of effect is absent. Conversely, if <code>med</code> is outside the confidence intervals, evidence of effect is present.</p>
 <p>Regarding the sRPE data set, surely an effect is present, but unfortunately the user can not definitively say there is a difference of 100 after resampling, as the 90% confidence interval contains 100 (dashed line between solid lines).</p>
 </div>
@@ -565,7 +562,7 @@ mbir<span class="op">::</span><span class="kw">swc_ind</span>(<span class="dt">x
 <ul>
 <li><code>x</code> numeric data vector of an individual’s performance measurements</li>
 <li><code>swc</code> (±) smallest worthwhile change</li>
-<li><code>type</code> “previous”</li>
+<li><code>type</code> “trend”</li>
 <li><code>ts</code> (±) target slope</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mbir<span class="op">::</span><span class="kw">swc_ind</span>(<span class="dt">x =</span> df, <span class="dt">swc =</span> <span class="fl">0.25</span>, <span class="dt">ts =</span> <span class="fl">0.2</span>, <span class="dt">type =</span> <span class="st">&quot;trend&quot;</span>)</code></pre></div>
@@ -593,7 +590,7 @@ mbir<span class="op">::</span><span class="kw">swc_ind</span>(<span class="dt">x
 ##      4    0.9   21 11 68                  ---
 ##      5    0.6   26 13 61                  ---
 ##      6   -1.4   90  5  5    Very Likely Lower</code></pre></div>
-<p>Below the given Trend Parameters is the magnitude-based inference about the slope against the target slope. In the current example, the slope of 0.463 is <em>likely higher</em> than the specified 0.25. The last table describes magnitude-based inferences of how far each time point vertically deviates from regression line (essentially an analysis of residuals). The current example displays that the first measurement is <em>likely lower</em> than the trend line, as well as measurement 6 being <em>possibly lower</em>. Otherwise, no meaningful deviations were detected.</p>
+<p>Below the given Trend Parameters is the magnitude-based inference about the slope against the target slope. In the current example, the slope of 0.474 is <em>likely higher</em> than the specified 0.25. The last table describes magnitude-based inferences of how far each time point vertically deviates from regression line (essentially an analysis of residuals). The current example displays that the first measurement is <em>likely lower</em> than the trend line, as well as measurement 6 being <em>possibly lower</em>. Otherwise, no meaningful deviations were detected.</p>
 <p><strong>References</strong></p>
 </div>
 </div>

@@ -19,6 +19,7 @@
 
 swc_ind<-function(x, swc, type=c("previous","trend"), ts, te, main, xlab, ylab){
 
+
   if(sum(x < 0) > 0){
     error<-"Sorry, positive values only."
     stop(error)
@@ -77,7 +78,7 @@ swc_ind<-function(x, swc, type=c("previous","trend"), ts, te, main, xlab, ylab){
     ylab<-deparse(substitute(x))
   }
 
-  times<-c(1:length(x))
+  times<<-c(1:length(x))
   mylen<-times[-utils::tail(times,n=1)]
   times2<-c(2:length(x))
 
@@ -132,6 +133,7 @@ swc_ind<-function(x, swc, type=c("previous","trend"), ts, te, main, xlab, ylab){
   graphics::lines(times,trivband.plus,lty=2,col="#666666")
   graphics::lines(times,trivband.minus,lty=2,col="#666666")
   graphics::arrows(times, x-te, times, x+te, length=0.05, angle=90, code=3)
+  rm(times,envir = globalenv())
   }
 
 
@@ -227,6 +229,7 @@ swc_ind<-function(x, swc, type=c("previous","trend"), ts, te, main, xlab, ylab){
   names(noway)<-c("Point"," ","Diff"," ","N","T","P"," ","MBI")
   cat("\n   MBI From Trend Line:\n\n")
   print(noway,row.names=F)
+  rm(times,envir = globalenv())
   rval <- list(slope=table1[1], rsq=table1[2],fstat=table1[3],p.value=table1[4])
   }
 }

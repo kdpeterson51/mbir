@@ -1,8 +1,8 @@
 Package: mbir
 Type: Package
 Title: Magnitude-Based Inferences
-Version: 1.3.4
-Date: 2018-09-16
+Version: 1.3.5
+Date: 2019-01-17
 Authors@R: c(person("Kyle", "Peterson", 
                      email = "petersonkdon@gmail.com",
                      role = c("aut", "cre")),
@@ -12,11 +12,14 @@ Description: Allows practitioners and researchers a wholesale approach for deriv
 Imports: graphics, stats, utils, effsize, psych
 URL: http://mbir-project.us/
 License: GPL-2
-Copyright: Segments of the package are based upon Will G. Hopkins' work. See vignette and COPYRIGHT file for details.
+Copyright: Segments of the package are based upon Will G. Hopkins'
+        work. See vignette and COPYRIGHT file for details.
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
-Suggests: knitr,
-    testthat,
-    rmarkdown
+Suggests: knitr, testthat, rmarkdown
 VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2019-01-18 04:05:32 UTC; ath_sportsci
+Author: Kyle Peterson [aut, cre],
+  Aaron Caldwell [aut]
