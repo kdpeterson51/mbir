@@ -1,6 +1,7 @@
 [![version](http://www.r-pkg.org/badges/version/mbir)](https://cran.r-project.org/package=mbir)
 [![CRAN](https://cranlogs.r-pkg.org/badges/mbir)](https://cran.r-project.org/web/packages/mbir/index.html)
 [![Build Status](https://travis-ci.org/kdpeterson51/mbir.svg?branch=master)](https://travis-ci.org/kdpeterson51/mbir)
+[![status](http://joss.theoj.org/papers/ff46731883f6f27042a27fc970f3b150/status.svg)](http://joss.theoj.org/papers/ff46731883f6f27042a27fc970f3b150)
 
 # mbir: Magnitude-Based Inferences
 Kyle D Peterson and Aaron R Caldwell
