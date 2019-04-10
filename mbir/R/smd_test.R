@@ -484,7 +484,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
     cat(NonParametricInference)
 
     invisible(list(or.stat = OR, or.LL = LL, or.UL = UL, r.stat = r, r.LL = r.LL, r.UL = r.UL,
-                   t.value = test$statistic[[1]], df = test$parameter[[1]], p.value = c(test$p.value,rank$p.value),
+                   t.value = test$statistic[[1]], df = test$parameter[[1]], p.value = test$p.value,
                    mean1 = round(mean(x, na.rm = T), digits = 3), sd1 = round(sd(x, na.rm = T), digits = 3),
                    mean2 = round(mean(y, na.rm = T), digits = 3), sd2 = round(sd(y, na.rm = T), digits = 3),
                    LogmbiNegative = negative, LogmbiTrivial = trivial, LogmbiPositive = positive,
