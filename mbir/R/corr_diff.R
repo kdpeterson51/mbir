@@ -25,7 +25,8 @@ corr_diff <- function(r1, n1, r2, n2,
                         moderate_alpha = .05,
                         weak_alpha = .25),
                       conf.level = .95,
-                      plot=mbir_options("plot"))
+                      plot=mbir_options("plot"),
+                      verbose = mbir_options("verbose"))
 {
   if (is.character(r1) == TRUE || is.factor(r1) == TRUE ||
       is.character(n1) == TRUE || is.factor(n1) == TRUE) {
@@ -102,7 +103,10 @@ corr_diff <- function(r1, n1, r2, n2,
   densdf <- head(densdf, -1)
   class(densdf) <- c("data.frame", "concurve")
   curve_vals = list(df,densdf)
-  curve_plot = ggcurve(curve_vals[[1]], type = "c")
+  curve_plot = ggcurve(curve_vals[[1]], type = "c",
+                       levels = conf.level)
+
+
 
   #diff <- r2 - r1
   #zcrit <- abs(qnorm((1 - conf.int)/2))
@@ -139,6 +143,12 @@ corr_diff <- function(r1, n1, r2, n2,
   p = test_indcor@fisher1925$p.value
   z = test_indcor@fisher1925$statistic
 
+  curve_plot = curve_plot +
+    labs(title = paste("Difference in Correlation = ", round(point, digits = 4),
+                       ", ", 100 * (conf.level),
+                       "% CI [", round(diff.LL, digits = 4), "; ",
+                       round(diff.UL, digits = 4), "] ", sep = ""))
+
 if (df[which(df$pvalue == mech_decisions$weak_alpha),]$lower.limit < 0 && df[which(df$pvalue == mech_decisions$weak_alpha),]$lower.limit > 0) {
     if (df[which(df$pvalue == mech_decisions$strong_alpha),]$lower.limit < 0 && df[which(df$pvalue == mech_decisions$strong_alpha),]$lower.limit > 0) {
       conclusion = paste("Inference: Strong Evidence Present, r2 ", dir, " r1", sep = "")
@@ -167,6 +177,10 @@ if (df[which(df$pvalue == mech_decisions$weak_alpha),]$lower.limit < 0 && df[whi
     #  100 * (conf.int), "% CI [", round(diff.LL, digits = 2),
     #  ";", round(diff.UL, digits = 2), "] ", " \n  ", inference,
     #  sep = ""), cex.main = 1)
+  }
+
+  if (verbose = TRUE) {
+    print(conclusion)
   }
 
   result_table = data.frame(
