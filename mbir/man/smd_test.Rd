@@ -4,8 +4,18 @@
 \alias{smd_test}
 \title{Standardized Mean Difference Test}
 \usage{
-smd_test(x, y, paired = c(TRUE, FALSE), auto = TRUE, var = TRUE,
-  normal = TRUE, conf.int = 0.9, mu = 0, swc = 0.5, plot = FALSE)
+smd_test(
+  x,
+  y,
+  paired = c(TRUE, FALSE),
+  auto = TRUE,
+  var = TRUE,
+  normal = TRUE,
+  conf.int = 0.9,
+  mu = 0,
+  swc = 0.5,
+  plot = FALSE
+)
 }
 \arguments{
 \item{x, y}{numeric vectors of data values}
@@ -40,4 +50,5 @@ a <- rnorm(25, 80, 35)
 b <- rnorm(25, 100, 50)
 
 smd_test(a, b, paired = FALSE, conf.int=0.95)
+
 }

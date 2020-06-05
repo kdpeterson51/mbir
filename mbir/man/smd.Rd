@@ -27,6 +27,7 @@ Refer to vignette for further information.
 }
 \examples{
 smd(.75, 0.06, 20, 0.95)
+
 }
 \references{
 Hopkins WG. (2007). A spreadsheet for deriving a confidence interval, mechanistic inference and clinical inference from a \emph{p} value. \emph{Sportscience} 11, 16-20. sportsci.org/2007/wghinf.htm

@@ -11,6 +11,9 @@
 #'@details Refer to vignette for further information.
 #'@references Hopkins WG. (2007). A spreadsheet for deriving a confidence interval, mechanistic inference and clinical inference from a \emph{p} value. \emph{Sportscience} 11, 16-20. sportsci.org/2007/wghinf.htm
 #'@examples smd(.75, 0.06, 20, 0.95)
+#'
+#'@importFrom stats pt qt
+#'@importFrom graphics abline title segments points
 #'@export
 
 smd <- function (es, p, df, conf.int=0.9, swc=0.5, plot=FALSE){
@@ -37,19 +40,20 @@ smd <- function (es, p, df, conf.int=0.9, swc=0.5, plot=FALSE){
     stop(error)
   }
 
-  negative <- round(100 * (ifelse((es - -swc) > 0, stats::pt((es -
-                                                                -swc)/abs(es) * abs(stats::qt(p/2, df)), df, lower.tail = F),
-                                  (1 - stats::pt((-swc - es)/abs(es) * abs(stats::qt(p/2,
+  warning("Function is depracated due to issues with the original MBI calculations; please use XXX function instead")
+  negative <- round(100 * (ifelse((es - -swc) > 0, pt((es -
+                                                                -swc)/abs(es) * abs(qt(p/2, df)), df, lower.tail = F),
+                                  (1 - pt((-swc - es)/abs(es) * abs(qt(p/2,
                                                                                      df)), df, lower.tail = F)))), digits = 1)
-  positive <- round(100 * (ifelse((es - swc) > 0, (1 - stats::pt((es -
-                                                                    swc)/abs(es) * abs(stats::qt(p/2, df)), df, lower.tail = F)),
-                                  stats::pt((swc - es)/abs(es) * abs(stats::qt(p/2, df)),
+  positive <- round(100 * (ifelse((es - swc) > 0, (1 - pt((es -
+                                                                    swc)/abs(es) * abs(qt(p/2, df)), df, lower.tail = F)),
+                                  pt((swc - es)/abs(es) * abs(qt(p/2, df)),
                                             df, lower.tail = F))), digits = 1)
   trivial <- round((100 - positive - negative), digits = 1)
-  LL <- es - (stats::qt(((100 - (100 * conf.int))/100)/2, df)) *
-    abs(es)/stats::qt(p/2, df)
-  UL <- es + (stats::qt(((100 - (100 * conf.int))/100)/2, df)) *
-    abs(es)/stats::qt(p/2, df)
+  LL <- es - (qt(((100 - (100 * conf.int))/100)/2, df)) *
+    abs(es)/qt(p/2, df)
+  UL <- es + (qt(((100 - (100 * conf.int))/100)/2, df)) *
+    abs(es)/qt(p/2, df)
   cat("   Standardized Mean Difference:\n")
   level <- paste(as.character(100 * conf.int), "%", sep = "")
   cat("   es = ", es, "\n", sep = "")
@@ -98,12 +102,12 @@ smd <- function (es, p, df, conf.int=0.9, swc=0.5, plot=FALSE){
                                       max(UL, swc) + max(UL - LL, swc -
                                                            -swc)/10), bty = "l", yaxt = "n", ylab = "",
          xlab = "Effect Size")
-    graphics::points(x = es, y = 0.5, pch = 15, cex = 2)
-    graphics::abline(v = swc, lty = 2)
-    graphics::abline(v = -swc, lty = 2)
-    graphics::abline(v = 0, lty = 2, col = "grey")
-    graphics::segments(LL, 0.5, UL, 0.5, lwd = 3)
-    graphics::title(main = paste(
+    points(x = es, y = 0.5, pch = 15, cex = 2)
+    abline(v = swc, lty = 2)
+    abline(v = -swc, lty = 2)
+    abline(v = 0, lty = 2, col = "grey")
+    segments(LL, 0.5, UL, 0.5, lwd = 3)
+    title(main = paste(
       "Cohen's d = ", round(es, digits = 3), " \n  ",
       100 * (conf.int), "% CI [", round(LL, digits = 3),
       ";", round(UL, digits = 3), "] ", " \n  ", "Inference: ", infer2, " ", mag," ", dir,
@@ -112,7 +116,8 @@ smd <- function (es, p, df, conf.int=0.9, swc=0.5, plot=FALSE){
 
   rval <- list(es=es, es.LL=LL, es.UL=UL,
                p.value=p, conf.int=conf.int, swc=swc,
-               mbiPositive=positive, mbiTrivial=trivial, mbiNegative=negative, inference=inference)
+               mbiPositive=positive, mbiTrivial=trivial,
+               mbiNegative=negative, inference=inference)
 }
 
 

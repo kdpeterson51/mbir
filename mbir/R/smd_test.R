@@ -17,9 +17,16 @@
 #'@examples b <- rnorm(25, 100, 50)
 #'
 #'@examples smd_test(a, b, paired = FALSE, conf.int=0.95)
+#'
+#'@importFrom stats shapiro.test var.test t.test wilcox.test qnorm pnorm qt pt
+#'@importFrom graphics abline title segments points
 #'@export
 
-smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal = TRUE, conf.int = 0.9, mu = 0, swc = 0.5, plot=FALSE) {
+smd_test <- function(x, y, paired = c(TRUE, FALSE),
+                     auto=TRUE, var = TRUE, normal = TRUE,
+                     conf.int = 0.9,
+                     mu = 0, swc = 0.5, plot=FALSE) {
+  warning("Function is depracated due to issues with the original MBI calculations; please use XXX function instead")
 
   if (is.character(x) == TRUE ||
       is.factor(x) == TRUE || is.character(y) ==
@@ -49,16 +56,16 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
   }
 
   if (auto==TRUE){
-    normal.x<-stats::shapiro.test(x)
-    normal.y<-stats::shapiro.test(y)
+    normal.x<-shapiro.test(x)
+    normal.y<-shapiro.test(y)
     Normal<-ifelse(normal.x$p.value < .05 || normal.y$p.value < .05, FALSE, TRUE)
     normlabel<-ifelse(normal.x$p.value < .05 || normal.y$p.value < .05,"   Skewness Observed","   Normality Observed")
-    equal<-stats::var.test(x,y)
+    equal<-var.test(x,y)
     variance<-ifelse(equal$p.value < .05, FALSE,TRUE)
     variance2<-ifelse(equal$p.value < .05, "Unequal Variance","Equal Variance")
   }
 
-  if(auto==FALSE){
+  if (auto == FALSE){
     NormTest <- FALSE
     VarTest <- FALSE
     Normal <- normal
@@ -78,7 +85,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
 
   if (Normal == FALSE) {
     if (0 %in% x || 0 %in% y) {
-      test <- stats::t.test(
+      test <- t.test(
         log(abs(x + 1)),
         log(abs(y +
                   1)),
@@ -91,7 +98,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
     }
     else {
       test <-
-        stats::t.test(
+        t.test(
           log(abs(x)),
           log(abs(y)),
           var.equal = variance,
@@ -114,7 +121,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
 
 
 
-    rank <- stats::wilcox.test(
+    rank <- wilcox.test(
       x,
       y,
       paired = paired,
@@ -126,12 +133,12 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
     )
     suppressWarnings(warning(rank))
     r <- ifelse(OR < 1,
-                stats::qnorm(rank$p.value / 2) / sqrt(n2),
-                abs(stats::qnorm(rank$p.value / 2) / sqrt(n2)))
+                qnorm(rank$p.value / 2) / sqrt(n2),
+                abs(qnorm(rank$p.value / 2) / sqrt(n2)))
     r.LL <-
       (exp(2 * ((swc * log((1 + r) / (1 - r)
       )) + (
-        stats::qnorm(((
+        qnorm(((
           100 -
             (100 * conf.int)
         ) / 100 / 2)) / sqrt(n - 3)
@@ -139,7 +146,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
                         ((swc * log((1 + r) /
                                         (1 - r)
                         )) + (
-                          stats::qnorm(((
+                          qnorm(((
                             100 -
                               (100 * conf.int)
                           ) / 100 / 2)) / sqrt(n - 3)
@@ -147,7 +154,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
     r.UL <-
       (exp(2 * ((swc * log((1 + r) / (1 - r)
       )) - (
-        stats::qnorm(((
+        qnorm(((
           100 -
             (100 * conf.int)
         ) / 100 / 2)) / sqrt(n - 3)
@@ -155,20 +162,20 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
                         ((swc * log((1 + r) /
                                         (1 - r)
                         )) - (
-                          stats::qnorm(((
+                          qnorm(((
                             100 -
                               (100 * conf.int)
                           ) / 100 / 2)) / sqrt(n - 3)
                         ))) + 1)
     level <- paste(as.character(100 * conf.int), "%", sep = "")
     negative <-
-      round(100 * (stats::pnorm((log(0.9) - log(OR)) / abs(log(OR) / stats::qnorm(test$p.value /
+      round(100 * (pnorm((log(0.9) - log(OR)) / abs(log(OR) / qnorm(test$p.value /
                                                                                     2))
       )),
       digits = 1)
-    positive <- round(100 * (1 - stats::pnorm((log(1.11) -
+    positive <- round(100 * (1 - pnorm((log(1.11) -
                                                  log(OR)) / abs(log(OR) /
-                                                                  stats::qnorm(test$p.value / 2))
+                                                                  qnorm(test$p.value / 2))
     )),
     digits = 1)
     trivial <- round((100 - positive - negative), digits = 1)
@@ -354,12 +361,12 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
     cat("   ", level, " CI ", "[", round(r.LL, digits = 2),
         ", ", round(r.UL, digits = 2), "]\n\n", sep = "")
     positive.r <-
-      round(100 * (1 - stats::pnorm(
+      round(100 * (1 - pnorm(
         0.1, mean = (swc *
                        log((1 + r) /
                              (1 - r))), sd = (1 / sqrt(n - 3))
       )), digits = 1)
-    negative.r <- round(100 * (stats::pnorm(
+    negative.r <- round(100 * (pnorm(
       -0.1, mean = (swc *
                       log((1 + r) /
                             (1 - r))), sd = (1 / sqrt(n - 3))
@@ -492,42 +499,45 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
                    LogInference=LogInference, NonParametricInference=NonParametricInference))
   }
   else {
-    test <- stats::t.test(x,y, var.equal = variance, paired = paired, conf.level = conf.int,
+    test <- t.test(x,y, var.equal = variance, paired = paired, conf.level = conf.int,
                           na.action = na.omit, mu = mu)
     d <- ifelse(paired == T, ((mean(x, na.rm = T) - mean(y,
                                                          na.rm = T)) / pair.stdr), test$statistic * ind.stdr)
-    LL <- d - (stats::qt(((
+    LL <- d - (qt(((
       100 - (100 * conf.int)
     ) / 100) / 2,
-    test$parameter)) * abs(d) / stats::qt(test$p.value /
+    test$parameter)) * abs(d) / qt(test$p.value /
                                             2,
                                           test$parameter)
-    UL <- d + (stats::qt(((
+    UL <- d + (qt(((
       100 - (100 * conf.int)
     ) / 100) / 2,
-    test$parameter)) * abs(d) / stats::qt(test$p.value /
+    test$parameter)) * abs(d) / qt(test$p.value /
                                             2,
                                           test$parameter)
-    if (test$parameter < 30) {
-      d <- d * (1 - (3 / (4 * (
-        test$parameter - 1
-      ))))
-      LL <- LL * (1 - (3 / (4 * (
-        test$parameter - 1
-      ))))
-      UL <- UL * (1 - (3 / (4 * (
-        test$parameter - 1
-      ))))
-    }
-    parameter <- ifelse(test$parameter < 30, "Cohen d Adj",
-                        "Cohen d")
+    #if (test$parameter < 30) {
+    #  d <- d * (1 - (3 / (4 * (
+    #    test$parameter - 1
+    #  ))))
+    #  LL <- LL * (1 - (3 / (4 * (
+    #    test$parameter - 1
+    #  ))))
+    #  UL <- UL * (1 - (3 / (4 * (
+    #    test$parameter - 1
+    #  ))))
+    #}
+    #parameter <- ifelse(test$parameter < 30, "Cohen d Adj",
+    #                    "Cohen d")
+
+    parameter = "Cohen d"
+
     negative <-
       round(100 * (ifelse((d--swc) > 0,
-                          stats::pt((d--swc) / abs(d) * abs(test$statistic),
+                          pt((d--swc) / abs(d) * abs(test$statistic),
                                     test$parameter,
                                     lower.tail = F
                           ),
-                          (1 - stats::pt((-swc - d) / abs(d) *
+                          (1 - pt((-swc - d) / abs(d) *
                                            abs(test$statistic),
                                          test$parameter,
                                          lower.tail = F
@@ -536,7 +546,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
       digits = 1)
     positive <-
       round(100 * (ifelse((d - swc) > 0,
-                          (1 - stats::pt((d -
+                          (1 - pt((d -
                                             swc) /
                                            abs(d) * abs(test$statistic),
                                          test$parameter,
@@ -694,12 +704,12 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
                                         max(UL, swc) + max(UL - LL, swc -
                                                                -swc)/10), bty = "l", yaxt = "n", ylab = "",
            xlab = "Effect Size")
-      graphics::points(x = d, y = 0.5, pch = 15, cex = 2)
-      graphics::abline(v = swc, lty = 2)
-      graphics::abline(v = -swc, lty = 2)
-      graphics::abline(v = 0, lty = 2, col = "grey")
-      graphics::segments(LL, 0.5, UL, 0.5, lwd = 3)
-      graphics::title(main = paste(
+      points(x = d, y = 0.5, pch = 15, cex = 2)
+      abline(v = swc, lty = 2)
+      abline(v = -swc, lty = 2)
+      abline(v = 0, lty = 2, col = "grey")
+      segments(LL, 0.5, UL, 0.5, lwd = 3)
+      title(main = paste(
         "Cohen's d = ", round(d, digits = 3), " \n  ",
         100 * (conf.int), "% CI [", round(LL, digits = 3),
         ";", round(UL, digits = 3), "] ", " \n  ", "Inference: ", infer2, " ", mag," ", dir,
@@ -713,7 +723,7 @@ smd_test<-function(x, y, paired = c(TRUE, FALSE), auto=TRUE, var = TRUE, normal 
       t.value = test$statistic[[1]],
       df = test$parameter[[1]],
       p.value = test$p.value,
-      conf.int=conf.int,
+      conf.int = conf.int,
       mean1 = round(mean(x, na.rm = T), digits = 3),
       sd1 = round(sd(x, na.rm = T), digits = 3),
       mean2 = round(mean(y, na.rm = T), digits = 3),

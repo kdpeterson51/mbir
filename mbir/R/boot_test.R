@@ -13,6 +13,9 @@
 #'@examples b <- rnorm(25, 100, 50)
 #'
 #'@examples boot_test(a, b, 0.95, 10000)
+#'
+#'@importFrom stats median quantile
+#'@importFrom graphics abline hist
 #'@export
 
 boot_test<-function(x,y,conf.int,resample, med){
@@ -36,8 +39,8 @@ boot_test<-function(x,y,conf.int,resample, med){
   medx <- medy <- numeric(resample)
 
   for (i in 1:resample) {
-    medx[i] <- stats::median(sample(x, replace=TRUE),na.rm = T)
-    medy[i] <- stats::median(sample(y, replace=TRUE),na.rm = T)
+    medx[i] <- median(sample(x, replace=TRUE),na.rm = T)
+    medy[i] <- median(sample(y, replace=TRUE),na.rm = T)
   }
 
   Diff <- medx - medy
@@ -46,11 +49,11 @@ boot_test<-function(x,y,conf.int,resample, med){
 
   level<-paste(as.character(100*conf.int),"%",sep = "")
 
-  cat("Median of ",deparse(substitute(x))," = ",round(stats::median(x,na.rm = T),digits = 2),"; ","Median of ",deparse(substitute(y))," = ",round(stats::median(y,na.rm = T),digits = 2),"\n\n",sep = "")
+  cat("Median of ",deparse(substitute(x))," = ",round(median(x,na.rm = T),digits = 2),"; ","Median of ",deparse(substitute(y))," = ",round(median(y,na.rm = T),digits = 2),"\n\n",sep = "")
 
   cat(level," Bootstrap Confidence Interval\n",format(resample, big.mark=",", scientific=FALSE)," Resamples\n\n",sep = "")
 
-  ci<-round(stats::quantile(Diff, c(interval, 1-interval),na.rm=T),digits = 3)
+  ci<-round(quantile(Diff, c(interval, 1-interval),na.rm=T),digits = 3)
   print(ci)
   if(unname(ci[1]) < med && unname(ci[2]) > med){
     cat("\nDifference in Medians: Lacking Evidence (CI contains ",med,").",sep = "")
@@ -59,14 +62,14 @@ boot_test<-function(x,y,conf.int,resample, med){
     cat("\nDifference in Medians: Evidence Present (CI does not contain ",med,").",sep = "")
     Inference <- "Evidence Present"}
 
-  graphics::hist(Diff, col='gray', border='white', las=1, xlab = "Difference in Medians", main = " ")
-  graphics::abline(v=med, lty=2)
-  graphics::abline(v=c(unname(ci[1])))
-  graphics::abline(v=unname(ci[2]))
+  hist(Diff, col='gray', border='white', las=1, xlab = "Difference in Medians", main = " ")
+  abline(v=med, lty=2)
+  abline(v=c(unname(ci[1])))
+  abline(v=unname(ci[2]))
 
   invisible(list(
     med = med,
-    med.diff = stats::median(Diff),
+    med.diff = median(Diff),
     b.LL = unname(ci[1]),
     b.UL = unname(ci[2]),
     Inference = Inference)

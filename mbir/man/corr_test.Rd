@@ -4,8 +4,15 @@
 \alias{corr_test}
 \title{Correlation Coefficient Test}
 \usage{
-corr_test(x, y, conf.int = 0.9, auto = TRUE, method = "pearson",
-  swc = 0.1, plot = FALSE)
+corr_test(
+  x,
+  y,
+  conf.int = 0.9,
+  auto = TRUE,
+  method = "pearson",
+  swc = 0.1,
+  plot = FALSE
+)
 }
 \arguments{
 \item{x, y}{numeric vectors of data values}

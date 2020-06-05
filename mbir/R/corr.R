@@ -13,6 +13,7 @@
 #'@export
 
 corr <- function (r, n, conf.int=0.9, swc=0.1, plot=FALSE) {
+  warning("Function is depracated due to issues with the original MBI calculations; please use XXX function instead")
   if (is.character(r) == TRUE || is.factor(r) == TRUE || is.character(n) ==
       TRUE || is.factor(n) == TRUE) {
     error <- "Sorry, data must be numeric or integer values."

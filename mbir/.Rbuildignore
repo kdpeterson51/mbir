@@ -7,3 +7,4 @@
 ^build/R$
 ^build/js$
 ^.*\.jmo$
+smd2\.R

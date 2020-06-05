@@ -2,9 +2,17 @@
 % Please edit documentation in R/corr_diff.R
 \name{corr_diff}
 \alias{corr_diff}
-\title{Test of Two Correlations}
+\title{Magnitude Based Inference for Differences in Two Correlations}
 \usage{
-corr_diff(r1, n1, r2, n2, conf.int = 0.9, plot = FALSE)
+corr_diff(
+  r1,
+  n1,
+  r2,
+  n2,
+  mech_decisions = list(strong_alpha = 0.005, moderate_alpha = 0.05, weak_alpha = 0.25),
+  conf.level = 0.95,
+  plot = mbir_options("plot")
+)
 }
 \arguments{
 \item{r1}{correlation of group 1}
@@ -15,15 +23,17 @@ corr_diff(r1, n1, r2, n2, conf.int = 0.9, plot = FALSE)
 
 \item{n2}{sample size of group 2}
 
-\item{conf.int}{(optional) confidence level of the interval. Defaults to \code{0.90}}
+\item{mech_decisions}{List containing options for mechanistic inference. Options include strong_alpha, mod_alpha, and weak_alpha.}
+
+\item{conf.level}{(optional) confidence level of the interval. Defaults to \code{0.95}}
 
 \item{plot}{(optional) logical indicator specifying to print associated plot. Defaults to \code{FALSE}}
 }
 \description{
-Provides statistical inference upon the difference between two independent correlations.
+Provides statistical inference upon the difference between two \emph{independent} correlations
 }
 \details{
-Refer to vignette for further information.
+For more options in calculating the differences in correlation coefficients see the \code{cocor} R package and their associated website <http://comparingcorrelations.org/>
 }
 \examples{
 corr_diff(r1 = 0.20, n1 = 71, r2 = 0.55, n2 = 46)
