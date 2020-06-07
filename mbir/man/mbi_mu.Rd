@@ -11,11 +11,10 @@ mbi_mu(
   var.equal = TRUE,
   low_eqbound,
   high_eqbound,
-  conf.level = 0.95,
-  mech_decisions = list(strong_alpha = 0.005, moderate_alpha = 0.05, weak_alpha = 0.25),
-  clin_decisions = list(use_direction = "positive", benefit_alpha = 0.25, harm_alpha =
-    0.005),
   inference = "mechanistic",
+  conf.level = mbir_options("conf.level"),
+  mech_decisions = mbir_options("mech_decisions"),
+  clin_decisions = mbir_options("clin_decisions"),
   plot = mbir_options("plot"),
   verbose = mbir_options("verbose")
 )
@@ -31,13 +30,13 @@ mbi_mu(
 
 \item{high_eqbound}{Upper equivalence bounds (e.g., 0.5) expressed in raw units}
 
+\item{inference}{The type of MBI hypothesis testing to be performed; options are clinical or mechanistic.}
+
 \item{conf.level}{Confidence level of the interval estimate. Default is 95\%, Ex: conf.level = 0.}
 
 \item{mech_decisions}{List containing options for mechanistic inference. Options include strong_alpha, mod_alpha, and weak_alpha.}
 
 \item{clin_decisions}{List containing options for clinical inference. Options include the use_direction (the direction of the effect that is considered positive or good), harm_alpha and benefit_alpha.}
-
-\item{inference}{The type of MBI hypothesis testing to be performed; options are clinical or mechanistic.}
 
 \item{plot}{(optional) logical indicator specifying to print associated plot. Defaults to \code{FALSE}}
 

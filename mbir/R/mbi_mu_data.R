@@ -29,17 +29,10 @@ mbi_mu <- function(x,y,
                    var.equal = TRUE,
                    low_eqbound,
                    high_eqbound,
-                   conf.level = .95,
-                   mech_decisions = list(
-                     strong_alpha = .005,
-                     moderate_alpha = .05,
-                     weak_alpha = .25),
-                   clin_decisions = list(
-                     use_direction = "positive",
-                     benefit_alpha = 0.25,
-                     harm_alpha = .005
-                   ),
                    inference = "mechanistic",
+                   conf.level = mbir_options("conf.level"),
+                   mech_decisions = mbir_options("mech_decisions"),
+                   clin_decisions = mbir_options("clin_decisions"),
                    plot = mbir_options("plot"),
                    verbose = mbir_options("verbose")){
 
@@ -249,7 +242,7 @@ mbi_mu <- function(x,y,
                           paired = paired,
                           method = "default")
 
-  curve_plot = ggcurve(curve_vals[[1]], type = "c")
+  curve_plot = ggcurve(curve_vals[[1]], type = "c", levels = conf.level)
   curve_plot = curve_plot +
     geom_vline(xintercept = low_eqbound,
                alpha = .3,

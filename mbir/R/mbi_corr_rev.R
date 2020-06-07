@@ -178,7 +178,7 @@ mbi_corr_rev <- function(r, n, conf.level = .95,
   densdf <- head(densdf, -1)
   class(densdf) <- c("data.frame", "concurve")
   curve_vals = list(df,densdf)
-  curve_plot = ggcurve(curve_vals[[1]], type = "c")
+  curve_plot = ggcurve(curve_vals[[1]], type = "c", levels = conf.level)
 
   curve_plot = curve_plot +
     geom_vline(xintercept = low_eqbound,

@@ -239,10 +239,10 @@ Suppose a practitioner used `corr_test()` twice to derive correlations between s
 
 ```{r, eval=FALSE}
 # Female correlation test
-female<-mbir::corr_test(F$bodyimage, F$wellbeing)
+female<-mbir::corr_test(Female$bodyimage, Female$wellbeing)
 
 # Male correlation test
-male<-mbir::corr_test(M$bodyimage, M$wellbeing)
+male<-mbir::corr_test(Male$bodyimage, Male$wellbeing)
 
 # Test of Two Correlations
 mbir::corr_diff(r1 = male$r.stat, n1 = 38, r2 = female$r.stat, n2 = 30)

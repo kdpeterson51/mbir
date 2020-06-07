@@ -1,7 +1,7 @@
 Package: mbir
 Type: Package
 Title: Magnitude-Based Inferences
-Version: 1.3.5
+Version: 2.0.0
 Date: 2019-01-21
 Authors@R: c(person("Kyle", "Peterson", 
                      email = "petersonkdon@gmail.com",
@@ -9,7 +9,7 @@ Authors@R: c(person("Kyle", "Peterson",
              person("Aaron", "Caldwell", role = "aut"))
 Maintainer: Kyle Peterson <petersonkdon@gmail.com>
 Description: Allows practitioners and researchers a wholesale approach for deriving magnitude-based inferences from raw data. A major goal of 'mbir' is to programmatically detect appropriate statistical tests to run in lieu of relying on practitioners to determine correct stepwise procedures independently.
-Imports: graphics, stats, utils, effsize, psych, concurve, pbmcapply
+Imports: graphics, stats, utils, effsize, psych, concurve, pbmcapply, ggplot2, cocor
 URL: http://mbir-project.us/
 License: GPL-2
 Copyright: Segments of the package are based upon Will G. Hopkins'

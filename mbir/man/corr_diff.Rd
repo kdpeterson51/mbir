@@ -9,9 +9,10 @@ corr_diff(
   n1,
   r2,
   n2,
-  mech_decisions = list(strong_alpha = 0.005, moderate_alpha = 0.05, weak_alpha = 0.25),
-  conf.level = 0.95,
-  plot = mbir_options("plot")
+  mech_decisions = mbir_options("mech_decisions"),
+  conf.level = mbir_options("conf.level"),
+  plot = mbir_options("plot"),
+  verbose = mbir_options("verbose")
 )
 }
 \arguments{
@@ -40,4 +41,5 @@ corr_diff(r1 = 0.20, n1 = 71, r2 = 0.55, n2 = 46)
 }
 \references{
 Zou GY. (2007). Toward using confidence intervals to compare correlations. \emph{Psychological Methods}, 12, 399-413.
+Diedenhofen, B. & Musch, J. (2015). cocor: A Comprehensive Solution for the Statistical Comparison of Correlations. PLoS ONE, 10(4): e0121945. doi: 10.1371/journal.pone.0121945 Available: http://dx.doi.org/10.1371/journal.pone.0121945
 }

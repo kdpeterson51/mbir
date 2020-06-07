@@ -17,15 +17,14 @@
 #'@importFrom concurve ggcurve
 #'@importFrom ggplot2 geom_vline labs
 #'@importFrom cocor cocor.indep.groups
+#'@importFrom pbmcapply pbmclapply
 #'@export
 
-corr_diff <- function(r1, n1, r2, n2,
-                      mech_decisions = list(
-                        strong_alpha = .005,
-                        moderate_alpha = .05,
-                        weak_alpha = .25),
-                      conf.level = .95,
-                      plot=mbir_options("plot"),
+corr_diff <- function(r1, n1,
+                      r2, n2,
+                      mech_decisions = mbir_options("mech_decisions"),
+                      conf.level = mbir_options("conf.level"),
+                      plot= mbir_options("plot"),
                       verbose = mbir_options("verbose"))
 {
   if (is.character(r1) == TRUE || is.factor(r1) == TRUE ||
@@ -48,7 +47,7 @@ corr_diff <- function(r1, n1, r2, n2,
   steps = 10000
   intrvls <- (1:(steps)) / steps
 
-  res_LL <- pbmclapply(intrvls, FUN = function(i) {
+  results <- pbmclapply(intrvls, FUN = function(i) {
     #diff <- r2 - r1
     #zcrit <- abs(qnorm((1 - i)/2))
     #r1.z <- 0.5 * log((1 + r1)/(1 - r1))
@@ -63,32 +62,19 @@ corr_diff <- function(r1, n1, r2, n2,
     #diff.LL <- diff - sqrt((r2 - r2.ll)^2 + (r1.ul - r1)^2)
     test_indcor = cocor.indep.groups(r1, r2, n1, n2,
                                      conf.level = i)
-    LL = test_indcor@zou2007$conf.int[1]
+    confs = test_indcor@zou2007$conf.int
 
 
   }, mc.cores = getOption("mc.cores", 1L))
+  #Seperate lists
+  results_LL = list()
+  results_UL = list()
+  for (i in 1:length(results)) {
+    results_LL[[i]] = results[[i]][1]
+    results_UL[[i]] = results[[i]][2]
+  }
 
-  res_UL <- pbmclapply(intrvls, FUN = function(i) {
-    #diff <- r2 - r1
-    #zcrit <- abs(qnorm((1 - i)/2))
-    #r1.z <- 0.5 * log((1 + r1)/(1 - r1))
-    #r1.sd <- 1/sqrt(n1 - 3)
-    #r1.ll <- r1.z - zcrit * r1.sd
-    #r1.ul <- r1.z + zcrit * r1.sd
-    #r2.z <- 0.5 * log((1 + r2)/(1 - r2))
-    #r2.sd <- 1/sqrt(n2 - 3)
-    #r2.ll <- r2.z - zcrit * r2.sd
-    #r2.ul <- r2.z + zcrit * r2.sd
-    test_indcor = cocor.indep.groups(r1, r2, n1, n2,
-                                     conf.level = i)
-    UL = test_indcor@zou2007$conf.int[2]
-
-    #diff.UL <- diff + sqrt((r2.ul - r2)^2 + (r1 - r1.ll)^2)
-
-
-  }, mc.cores = getOption("mc.cores", 1L))
-
-  df <- data.frame(do.call(rbind, res_LL), do.call(rbind, res_UL))
+  df <- data.frame(do.call(rbind, results_LL), do.call(rbind, results_UL))
   intrvl.limit <- c("lower.limit", "upper.limit")
   colnames(df) <- intrvl.limit
   df$intrvl.width <- (abs((df$upper.limit) - (df$lower.limit)))
@@ -179,7 +165,7 @@ if (df[which(df$pvalue == mech_decisions$weak_alpha),]$lower.limit < 0 && df[whi
     #  sep = ""), cex.main = 1)
   }
 
-  if (verbose = TRUE) {
+  if (verbose == TRUE) {
     print(conclusion)
   }
 

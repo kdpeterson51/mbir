@@ -13,10 +13,9 @@ mbi_mu_rev(
   low_eqbound,
   high_eqbound,
   paired = TRUE,
-  conf.level = 0.95,
-  mech_decisions = list(strong_alpha = 0.005, moderate_alpha = 0.05, weak_alpha = 0.25),
-  clin_decisions = list(use_direction = "positive", benefit_alpha = 0.25, harm_alpha =
-    0.005),
+  conf.level = mbir_options("conf.level"),
+  mech_decisions = mbir_options("mech_decisions"),
+  clin_decisions = mbir_options("clin_decisions"),
   inference = "mechanistic",
   plot = mbir_options("plot"),
   verbose = mbir_options("verbose")

@@ -18,6 +18,8 @@
 
 corr_test <- function(x, y, conf.int=0.9, auto=TRUE, method="pearson", swc=0.1, plot=FALSE) {
 
+
+
   if (length(x) != length(y) || sum(is.na(x)) > 0 || sum(is.na(y)) > 0) {
     error <- "Sorry, data must be same length and complete cases."
     stop(error)
@@ -42,6 +44,8 @@ corr_test <- function(x, y, conf.int=0.9, auto=TRUE, method="pearson", swc=0.1, 
     error <- "Sorry, the smallest effect size of interest (swc) must be a positive number"
     stop(error)
   }
+
+  warning("Function is depracated due to issues with the original MBI calculations; please use XXX function instead")
   #Variance and normality checks were removed.
   x <- stats::na.omit(x)
   y <- stats::na.omit(y)

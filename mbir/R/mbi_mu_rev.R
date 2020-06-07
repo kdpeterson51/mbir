@@ -23,6 +23,7 @@
 #'@importFrom stats pt qt
 #'@importFrom graphics abline title segments points
 #'@importFrom concurve curve_rev ggcurve
+#'@importFrom ggplot2 geom_vline labs
 #'@export
 
 mbi_mu_rev <- function(point,
@@ -32,16 +33,9 @@ mbi_mu_rev <- function(point,
                        low_eqbound,
                        high_eqbound,
                        paired = TRUE,
-                       conf.level = .95,
-                       mech_decisions = list(
-                         strong_alpha = .005,
-                         moderate_alpha = .05,
-                         weak_alpha = .25),
-                       clin_decisions = list(
-                         use_direction = "positive",
-                         benefit_alpha = 0.25,
-                         harm_alpha = .005
-                       ),
+                       conf.level = mbir_options("conf.level"),
+                       mech_decisions = mbir_options("mech_decisions"),
+                       clin_decisions = mbir_options("clin_decisions"),
                        inference = "mechanistic",
                        plot = mbir_options("plot"),
                        verbose = mbir_options("verbose")) {
@@ -227,7 +221,11 @@ mbi_mu_rev <- function(point,
                          steps = 10000,
                          table = TRUE)
 
-  curve_plot = ggcurve(curve_vals[[1]], type = "c")
+  #conf_lines = c(1 - mech_decisions$weak_alpha*2,
+  #               1 - mech_decisions$moderate_alpha*2,
+  #               1 - mech_decisions$strong_alpha*2)
+
+  curve_plot = ggcurve(curve_vals[[1]], type = "c", levels = conf_level)
   curve_plot = curve_plot +
     geom_vline(xintercept = low_eqbound,
                alpha = .3,
